@@ -103,6 +103,15 @@ input::placeholder,textarea::placeholder{color:#5f7a93}
 .cols2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 @media(max-width:640px){.cols2,.cols3{grid-template-columns:1fr}}
+table.dyl{width:100%;border-collapse:collapse;margin:8px 0;font-size:14.5px}
+table.dyl th{text-align:left;color:#eef4fb;font-weight:500;padding:8px 10px;border:1px solid var(--line2);background:var(--chip);vertical-align:middle}
+table.dyl th small{color:var(--faint);font-weight:300;font-size:11.5px}
+table.dyl td{padding:5px 8px;border:1px solid var(--line2);vertical-align:middle}
+table.dyl input[type=text],table.dyl textarea{border:none;background:transparent;padding:7px 6px;font-size:15.5px;width:100%}
+table.dyl textarea{min-height:52px}
+table.dyl td.g{white-space:nowrap;width:210px}
+table.dyl .val{color:var(--gold);font-family:var(--play);margin-left:8px;font-size:14px}
+@media(max-width:640px){table.dyl,table.dyl tbody,table.dyl tr,table.dyl th,table.dyl td{display:block;width:auto!important;border:none}table.dyl tr{border:1px solid var(--line2);border-radius:10px;margin-bottom:10px;padding:5px}table.dyl td.g{width:auto}}
 
 /* dashboard sliders */
 .gauge{margin:11px 0}
@@ -179,7 +188,7 @@ input[type=range]::-moz-range-thumb{width:21px;height:21px;border-radius:50%;bac
     <h1>打造你的<span class="g">個人使用說明書</span></h1>
     <div class="sub">保險不是你的身分，是你的商業模式。這份互動工作簿會帶你把「你自己」變成市場上唯一的產品——然後用它去增員。邊讀公式與出處，邊填，系統自動幫你存檔，最後產出一份專屬於你的使用說明書。</div>
     <div class="eq">
-      <div class="formula">B = [ (U × SK) × A × L ] <sup>T</sup> <span class="luck">× Luck</span></div>
+      <div class="formula">B = [ (U × SK) × A × L ] <sup>T <span class="luck">× Luck</span></sup></div>
       <div class="legend">個人商品力 = [(獨特性 × 特定知識) × 當責 × 槓桿] ^ 時間複利 × 造運引擎</div>
       <div class="luckline">Luck｜造運引擎 = 你的第一部：四種幸運（盲運 · 動量運 · 識別運 · 獨特運）</div>
       <div style="margin-top:10px">
@@ -192,27 +201,14 @@ input[type=range]::-moz-range-thumb{width:21px;height:21px;border-radius:50%;bac
 
 <main class="wrap">
 
-  <!-- identity -->
-  <div class="idcard">
-    <h3>先報到（這幾欄會幫處經理修哥做課後統計分析）</h3>
-    <div class="idgrid">
-      <div class="field" style="margin:0"><label>姓名 / 代號</label><input type="text" id="name" data-field placeholder="可用代號，例如 A-林"></div>
-      <div class="field" style="margin:0"><label>單位 / 通訊處</label><input type="text" id="unit" data-field placeholder="例如 ○○ 通訊處"></div>
-      <div class="field" style="margin:0"><label>保險年資</label><input type="text" id="years" data-field placeholder="例如 18 年"></div>
-      <div class="field" style="margin:0"><label>年齡層</label>
-        <select id="age_band" data-field>
-          <option value="">請選擇</option><option>30-39</option><option>40-49</option><option>50-59</option><option>60+</option>
-        </select>
-      </div>
-    </div>
-  </div>
+  <!-- 報到欄已移到最後「送出區」，不擋在最前面 -->
 
   <!-- ===== MODULE NAV ===== -->
   <nav class="modnav">
     <div class="wrap">
       <button class="part">第一次上課 ▸</button>
       <button onclick="jump('m1')">1 診斷</button>
-      <button onclick="jump('m2')">2 挖礦</button>
+      <button onclick="jump('m2')">2 發覺天賦</button>
       <button onclick="jump('m3')">3 定位</button>
       <button class="part">第二次上課 ▸</button>
       <button onclick="jump('m4')">4 產品化</button>
@@ -239,57 +235,88 @@ input[type=range]::-moz-range-thumb{width:21px;height:21px;border-radius:50%;bac
 
       <div class="callout game"><div class="t">🎲 現場遊戲：地位拍賣會</div>用籌碼競標「響亮頭銜 / 名車 / 十萬粉絲」對上「睡後收入 / 週三下午自由 / 永遠挺你的團隊」，看你把人生押在地位還是財富。（紙本同款，見帶回家教具）</div>
 
-      <div class="field"><label>① 我的四燈號人生儀表板（截至今天）</label><div class="hint">誠實拉。處經理常見：工作滿格，但「遊戲」見底——熱情枯竭的真相，往往是「純粹為快樂而做的事」歸零。</div>
-        <div class="gauge"><div class="row"><b>健康 Health</b><span class="val"><span id="v_health">50</span>%</span></div><input type="range" id="m1_health" data-field data-gauge min="0" max="100" value="50"></div>
-        <div class="gauge"><div class="row"><b>工作 Work</b><span class="val"><span id="v_work">50</span>%</span></div><input type="range" id="m1_work" data-field data-gauge min="0" max="100" value="50"></div>
-        <div class="gauge"><div class="row"><b>遊戲 Play</b><span class="val"><span id="v_play">50</span>%</span></div><input type="range" id="m1_play" data-field data-gauge min="0" max="100" value="50"></div>
-        <div class="gauge"><div class="row"><b>愛 Love</b><span class="val"><span id="v_love">50</span>%</span></div><input type="range" id="m1_love" data-field data-gauge min="0" max="100" value="50"></div>
-      </div>
-      <div class="field"><label>② 我最暗的一盞燈是＿＿，因為＿＿</label><input type="text" id="m1_dimmest" data-field placeholder="例如：遊戲，因為我已經三年沒做一件純粹為了快樂的事"></div>
-      <div class="cols2">
-        <div class="field"><label>③ 我一直在玩的「地位遊戲」叫</label><input type="text" id="m1_status_game" data-field placeholder="例如：每月跟同業比排名"></div>
-        <div class="field"><label>④ 我想換成的「財富／貢獻遊戲」是</label><input type="text" id="m1_wealth_game" data-field placeholder="例如：今年讓 3 個新人月入破 10 萬"></div>
+      <div class="field"><label>① 人生儀表板（DYL 第 1 章）— 四格各寫現況＋拉滿意度</label><div class="hint">處經理常見：工作滿格，「遊戲」見底——熱情枯竭的真相＝純粹為快樂而做的事歸零。</div>
+        <table class="dyl"><tbody>
+          <tr><th>健康 Health</th><td><input type="text" id="m1_note_health" data-field placeholder="現況一句話"></td><td class="g"><input type="range" id="m1_health" data-field data-gauge min="0" max="100" value="50"><span class="val"><span id="v_health">50</span>%</span></td></tr>
+          <tr><th>工作 Work</th><td><input type="text" id="m1_note_work" data-field placeholder="現況一句話"></td><td class="g"><input type="range" id="m1_work" data-field data-gauge min="0" max="100" value="50"><span class="val"><span id="v_work">50</span>%</span></td></tr>
+          <tr><th>遊戲 Play</th><td><input type="text" id="m1_note_play" data-field placeholder="現況一句話"></td><td class="g"><input type="range" id="m1_play" data-field data-gauge min="0" max="100" value="50"><span class="val"><span id="v_play">50</span>%</span></td></tr>
+          <tr><th>愛 Love</th><td><input type="text" id="m1_note_love" data-field placeholder="現況一句話"></td><td class="g"><input type="range" id="m1_love" data-field data-gauge min="0" max="100" value="50"><span class="val"><span id="v_love">50</span>%</span></td></tr>
+        </tbody></table>
       </div>
 
-      <div class="takeaway"><b>帶得走｜</b>工具：四燈號儀表板（每週日自評）　·　可教下屬：別玩零和地位遊戲，玩正和貢獻遊戲　·　延伸問題：我帶團隊的 KPI，是在逼大家比排名，還是一起成長？</div>
+      <div class="field"><label>② 羅盤／指南針（DYL 第 2 章）— 工作觀 × 人生觀，找方向不是找地點</label><div class="hint">三題答完，檢查彼此一致嗎（一致性＝你是誰、你信什麼、你做什麼三者連貫）。</div>
+        <table class="dyl"><tbody>
+          <tr><th>你是誰？<br><small>人生觀·身分</small></th><td><textarea id="m1_compass_who" data-field placeholder="你為何而活？什麼讓人生有意義？什麼最滿足你？"></textarea></td></tr>
+          <tr><th>你在追求什麼？<br><small>工作觀·目的</small></th><td><textarea id="m1_compass_pursue" data-field placeholder="工作對你的意義？為何而做？什麼讓它值得？"></textarea></td></tr>
+          <tr><th>自由飛翔的燕子飛多快？<br><small>你想活的速度/節奏</small></th><td><textarea id="m1_compass_pace" data-field placeholder="你想用什麼步調、什麼自由度，過這一生？"></textarea></td></tr>
+        </tbody></table>
+        <input type="text" id="m1_compass_coherence" data-field placeholder="一致性檢查：上面三題跟你每天在做的事，哪裡一致、哪裡矛盾？" style="margin-top:8px">
+      </div>
+
+      <div class="field"><label>③ 周哈里窗（Johari Window）— 小組互相討論，看見盲點</label>
+        <div class="hint">操作：① 從下方挑 5–6 個你覺得最像自己的形容詞 ② 同組夥伴各幫你挑 5–6 個 ③ 對照填入四格——目標是把「開放我」變大。出處：Luft &amp; Ingham 1955。</div>
+        <div style="margin:4px 0 8px;font-size:13px;color:var(--muted)">形容詞參考：自律 · 熱情 · 可靠 · 幽默 · 有遠見 · 善傾聽 · 果斷 · 細心 · 慷慨 · 冷靜 · 好奇 · 堅毅 · 體貼 · 直接 · 樂觀 · 領導 · 謙虛 · 創意 · 務實 · 有耐心</div>
+        <table class="dyl"><tbody>
+          <tr><th>開放我<br><small>我知＋夥伴也知</small></th><td><input type="text" id="m1_johari_open" data-field placeholder="你和夥伴都圈到的"></td></tr>
+          <tr><th>盲目我<br><small>我不知·夥伴知（最珍貴）</small></th><td><input type="text" id="m1_johari_blind" data-field placeholder="只有夥伴圈到的——你的盲點"></td></tr>
+          <tr><th>隱藏我<br><small>我知·夥伴不知</small></th><td><input type="text" id="m1_johari_hidden" data-field placeholder="只有你自己圈到的"></td></tr>
+          <tr><th>未知我<br><small>都還沒看到的潛能</small></th><td><input type="text" id="m1_johari_unknown" data-field placeholder="想探索/開發的潛在特質"></td></tr>
+        </tbody></table>
+      </div>
+      <div class="field"><label>④ 我最暗的一盞燈是＿＿，因為＿＿</label><input type="text" id="m1_dimmest" data-field placeholder="例如：遊戲，因為我已經三年沒做一件純粹為了快樂的事"></div>
+      <div class="cols2">
+        <div class="field"><label>⑤ 我一直在玩的「地位遊戲」叫</label><input type="text" id="m1_status_game" data-field placeholder="例如：每月跟同業比排名"></div>
+        <div class="field"><label>⑥ 我想換成的「財富／貢獻遊戲」是</label><input type="text" id="m1_wealth_game" data-field placeholder="例如：今年讓 3 個新人月入破 10 萬"></div>
+      </div>
+
+      <div class="takeaway"><b>帶得走｜</b>工具：四燈號儀表板（每週日自評）　·　可教夥伴：別玩零和地位遊戲，玩正和貢獻遊戲　·　延伸問題：我帶團隊的 KPI，是在逼大家比排名，還是一起成長？</div>
     </div>
   </section>
 
   <!-- MODULE 2 -->
   <section class="module" id="m2" data-letter="U,SK">
-    <div class="mhead"><div class="mno">MODULE 02 · 挖礦</div><h2>找出你的特定知識與天賦</h2>
+    <div class="mhead"><div class="mno">MODULE 02 · 發覺天賦</div><h2>找出你的特定知識與天賦</h2>
       <div class="goal">從你的人生礦脈，挖出 3 條別人複製不了的「特定知識」，交集出一句「全市場可能只有我」。</div>
       <span class="pp">對應痛點 1 · 個人不可替代性（增員的底）</span></div>
     <div class="mbody">
       <div class="kb"><div class="lbl">解釋 · 特定知識</div>別人無法複製、教不來、學校不教、只能從你個人經歷與好奇心長出來的能力。三個辨識標準：①<b>於你像玩、於人像工作</b>（你願意週末免費做的事）②教不出來（只能實作犯錯習得）③無法外包（AI 取代不了）。</div>
       <div class="src"><b>出處：</b><span class="srcchip">納瓦爾 推文 13–17 · nav.al/specific-knowledge</span><span class="srcchip">《做自己的生命設計師》好時光日誌＋AEIOU</span><span class="srcchip">Scott Adams 技能疊加 Talent Stack</span><span class="srcchip">契克森米哈伊《心流》</span></div>
 
-      <div class="formulaBox"><div class="f">唯一性 = A前25% ∩ B前25% ∩ C前25%</div><div class="n">不必當單一領域世界第一；3 個熱愛領域各達前 25%，交集處競爭者趨近零（Scott Adams 鼯鼠策略）。</div></div>
+      <div class="formulaBox"><div class="f">唯一性 = A前25% × B前25% × C前25%</div><div class="n">不必當單一領域世界第一；3 個熱愛領域各達前 25%，相乘後競爭者趨近零（Scott Adams 鼯鼠策略）。</div></div>
 
       <div class="callout game"><div class="t">🎲 好時光日誌 · AEIOU 反思</div>把課前兩週日誌畫成折線，圈出心流＋充能的重疊點，用 AEIOU 解剖：做什麼(A) / 什麼環境(E) / 跟誰互動(I) / 用什麼工具(O) / 旁邊還有誰(U)。</div>
 
-      <div class="field"><label>① 我的三個「忘記時間、做完還充電」的時刻（心流切片）</label>
+      <div class="field"><label>① 好時光日誌 · 活動紀錄（DYL 第 3 章）— 三個「忘記時間、做完還充電」的時刻</label>
         <div class="cols3">
           <input type="text" id="m2_flow_1" data-field placeholder="心流時刻 1">
           <input type="text" id="m2_flow_2" data-field placeholder="心流時刻 2">
           <input type="text" id="m2_flow_3" data-field placeholder="心流時刻 3">
         </div>
       </div>
-      <div class="field"><label>② 最耗能、做完虛脫的事（之後要外包或系統化）</label><input type="text" id="m2_drain" data-field placeholder="例如：做行政報表、陌生開發"></div>
-      <div class="field"><label>③ 我的三圈交集（把心流提煉成 3 個領域）</label>
+      <div class="field"><label>② AEIOU 反思 — 挑能量最高那件，五問解剖（找出它「為什麼」讓你充電）</label>
+        <table class="dyl"><tbody>
+          <tr><th>A 活動 Activities</th><td><input type="text" id="m2_aeiou_a" data-field placeholder="你實際在做什麼？主動還是被動？"></td></tr>
+          <tr><th>E 環境 Environments</th><td><input type="text" id="m2_aeiou_e" data-field placeholder="在什麼場域？室內外？氛圍？"></td></tr>
+          <tr><th>I 互動 Interactions</th><td><input type="text" id="m2_aeiou_i" data-field placeholder="跟誰？新或熟？人還是機器？"></td></tr>
+          <tr><th>O 物件 Objects</th><td><input type="text" id="m2_aeiou_o" data-field placeholder="用什麼工具/裝置/物件？"></td></tr>
+          <tr><th>U 使用者 Users</th><td><input type="text" id="m2_aeiou_u" data-field placeholder="現場還有誰？他們的角色？"></td></tr>
+        </tbody></table>
+      </div>
+      <div class="field"><label>③ 最耗能、做完虛脫的事（之後要外包或系統化）</label><input type="text" id="m2_drain" data-field placeholder="例如：做行政報表、陌生開發"></div>
+      <div class="field"><label>④ 我的三圈交集（把心流提煉成 3 個領域）</label>
         <div class="cols3">
           <input type="text" id="m2_circle_a" data-field placeholder="領域 A（如 保險專業）">
           <input type="text" id="m2_circle_b" data-field placeholder="領域 B（如 三鐵/登山）">
           <input type="text" id="m2_circle_c" data-field placeholder="領域 C（如 說書/演講）">
         </div>
       </div>
-      <div class="field"><label>④ 把三圈合成一句定位</label><input type="text" id="m2_intersection" data-field placeholder="例如：給中壯年運動人的退休與保險規劃顧問">
+      <div class="field"><label>⑤ 把三圈合成一句定位</label><input type="text" id="m2_intersection" data-field placeholder="例如：給中壯年運動人的退休與保險規劃顧問">
         <div class="live">我的特定知識交集 ＝ <span class="ph" id="pv_circle">＿ × ＿ × ＿</span><br>→ 一句話：<span class="ph" id="pv_inter">＿＿＿</span></div>
       </div>
 
-      <div class="callout case"><div class="t">📁 案例</div>一位處經理做日誌兩週後發現，她紅線最高的不是簽大單，而是「週六帶新人爬山聊人生卡關」。她的交集＝登山×保險×傾聽，後來把增員主場搬到山上叫「稜線上的職涯諮詢」，報名額滿。</div>
+      <div class="callout case"><div class="t">📁 我的三鐵舉例</div>我做日誌發現，能量最高的不是談保單，而是「清晨練車跟車友邊騎邊聊人生卡關」。三圈交集＝三鐵 × 保險 × 陪伴傾聽，於是我把增員場景改成「破風團騎＋早餐會」——邊騎邊談財務配速，談保單變成談人生補給。結果報名額滿、留存率最高，因為這是「於我像玩、於人像工作」的事。</div>
 
-      <div class="takeaway"><b>帶得走｜</b>工具：好時光日誌＋三圈交集圖　·　可教下屬：你的價值不在很懂保單，在你獨一無二的人生交集　·　延伸問題：我團隊每個人的三圈交集，我說得出來嗎？</div>
+      <div class="takeaway"><b>帶得走｜</b>工具：好時光日誌＋三圈交集圖　·　可教夥伴：你的價值不在很懂保單，在你獨一無二的人生交集　·　延伸問題：我團隊每個人的三圈交集，我說得出來嗎？</div>
     </div>
   </section>
 
@@ -304,12 +331,13 @@ input[type=range]::-moz-range-thumb{width:21px;height:21px;border-radius:50%;bac
 
       <div class="formulaBox"><div class="f">非標品定位 = 跨界標籤(U) × 保險專業(SK)</div><div class="n">「幫你比保單」競爭者幾十萬；「專為三鐵玩家規劃風險護城河」競爭者趨近 0。</div></div>
 
-      <div class="field"><label>① 我的奧德賽三計畫（五年後的三個我）</label><div class="hint">重點不是選哪個，是看見自己不只一條路，破除「我這輩子只能這樣」。</div>
-        <div class="cols3">
-          <textarea id="m3_odyssey_a" data-field placeholder="A 延續優化：把現在的路走到極致"></textarea>
-          <textarea id="m3_odyssey_b" data-field placeholder="B 若保險消失：你會做什麼"></textarea>
-          <textarea id="m3_odyssey_c" data-field placeholder="C 不缺錢不怕面子：純粹想做什麼"></textarea>
-        </div>
+      <div class="field"><label>① 奧德賽三計畫（DYL 第 5 章）— 三個五年版本，各填標題/劇情/探索問題＋四儀表</label><div class="hint">重點不是選哪個，是看見自己不只一條路。四儀表（0–5）：資源(夠不夠)、喜歡度(你多愛)、自信(敢不敢)、一致性(合不合你的羅盤)。</div>
+        <table class="dyl"><thead><tr><th></th><th>A 延續優化</th><th>B 若保險消失</th><th>C 不缺錢不怕面子</th></tr></thead><tbody>
+          <tr><th>六字標題</th><td><input type="text" id="m3_oa_title" data-field placeholder="一句 headline"></td><td><input type="text" id="m3_ob_title" data-field placeholder="一句 headline"></td><td><input type="text" id="m3_oc_title" data-field placeholder="一句 headline"></td></tr>
+          <tr><th>五年劇情</th><td><textarea id="m3_odyssey_a" data-field placeholder="把現在的路走到極致"></textarea></td><td><textarea id="m3_odyssey_b" data-field placeholder="保險消失你會做什麼"></textarea></td><td><textarea id="m3_odyssey_c" data-field placeholder="不缺錢不怕面子想做什麼"></textarea></td></tr>
+          <tr><th>探索的問題</th><td><input type="text" id="m3_oa_q" data-field placeholder="這條路想滿足你哪個好奇？"></td><td><input type="text" id="m3_ob_q" data-field placeholder="想探索什麼？"></td><td><input type="text" id="m3_oc_q" data-field placeholder="想探索什麼？"></td></tr>
+          <tr><th>四儀表<br><small>資源/喜歡/自信/一致</small></th><td><input type="text" id="m3_oa_gauge" data-field placeholder="如 4/5/3/4"></td><td><input type="text" id="m3_ob_gauge" data-field placeholder="如 3/4/3/5"></td><td><input type="text" id="m3_oc_gauge" data-field placeholder="如 2/5/2/5"></td></tr>
+        </tbody></table>
       </div>
 
       <div class="field"><label>② 一句話電梯簡報（填空，下面即時組成）</label>
@@ -325,7 +353,7 @@ input[type=range]::-moz-range-thumb{width:21px;height:21px;border-radius:50%;bac
       </div>
 
       <div class="callout game"><div class="t">🎲 人設混搭卡</div>隨機抽「跨界標籤 × 保險場景」掰一個荒謬但獨特的顧問人設——越荒謬，競爭者越接近零。</div>
-      <div class="takeaway"><b>帶得走｜</b>工具：奧德賽畫布＋一句話定位　·　可教下屬：別當標準品，當非標品　·　延伸問題：我的招募文宣在賣「來我們公司」還是「來打造你的非標品」？</div>
+      <div class="takeaway"><b>帶得走｜</b>工具：奧德賽畫布＋一句話定位　·　可教夥伴：別當標準品，當非標品　·　延伸問題：我的招募文宣在賣「來我們公司」還是「來打造你的非標品」？</div>
     </div>
   </section>
 
@@ -360,7 +388,7 @@ input[type=range]::-moz-range-thumb{width:21px;height:21px;border-radius:50%;bac
         <div class="field"><label>最壞損失（上限）</label><input type="text" id="m4_mvp_loss" data-field placeholder="如：2 小時+一點面子"></div>
         <div class="field"><label>最好收益（無頂）</label><input type="text" id="m4_mvp_gain" data-field placeholder="如：5 名單+1 支可剪10條的母帶"></div>
       </div>
-      <div class="takeaway"><b>帶得走｜</b>工具：三層漏斗＋30 天 MVP　·　可教下屬：別零售時間，打包成系統　·　延伸問題：我的招募開發有幾成還在純勞動硬幹？</div>
+      <div class="takeaway"><b>帶得走｜</b>工具：三層漏斗＋30 天 MVP　·　可教夥伴：別零售時間，打包成系統　·　延伸問題：我的招募開發有幾成還在純勞動硬幹？</div>
     </div>
   </section>
 
@@ -389,8 +417,8 @@ input[type=range]::-moz-range-thumb{width:21px;height:21px;border-radius:50%;bac
         </div>
       </div>
 
-      <div class="callout case"><div class="t">📁 修哥親授段（現場由講師補三大痛點實戰）</div>增員難＋組織停滯 / 市場飽和 / 帶人管理——三段真實案例由講師現場分享（手冊 5.6，講師獨家經驗）。</div>
-      <div class="takeaway"><b>帶得走｜</b>工具：心流破冰面試＋准增員 IP 卡＋選人計分卡（智慧/能量/正直）　·　可教下屬：增員不是塞人進系統，是用系統幫他長出個人商品　·　延伸問題：我上一個增員失敗的人，是不是只因為我用「你想賺大錢嗎」開場？</div>
+      <div class="callout case"><div class="t">📁 講師親授段（現場補三大痛點實戰）</div>增員難＋組織停滯 / 市場飽和 / 帶人管理——三段真實案例由講師現場分享（手冊 5.6，講師獨家經驗）。</div>
+      <div class="takeaway"><b>帶得走｜</b>工具：心流破冰面試＋准增員 IP 卡＋選人計分卡（智慧/能量/正直）　·　可教夥伴：增員不是塞人進系統，是用系統幫他長出個人商品　·　延伸問題：我上一個增員失敗的人，是不是只因為我用「你想賺大錢嗎」開場？</div>
     </div>
   </section>
 
@@ -425,7 +453,7 @@ input[type=range]::-moz-range-thumb{width:21px;height:21px;border-radius:50%;bac
           <span>我是我內在基礎建設的唯一建築師；我拒絕再為追逐地位簽下讓自己不快樂的合約；我用「貢獻」定義價值，跟長期的人玩長期的遊戲。</span>
         </label>
       </div>
-      <div class="takeaway"><b>帶得走｜</b>工具：Enough Line＋睡眠測試＋主權誓言　·　可教下屬：所有回報來自複利，你正站在奇異點上，別中途下車　·　延伸問題：我帶團隊，是在幫人簽更多慾望合約，還是幫人找回主權？</div>
+      <div class="takeaway"><b>帶得走｜</b>工具：Enough Line＋睡眠測試＋主權誓言　·　可教夥伴：所有回報來自複利，你正站在奇異點上，別中途下車　·　延伸問題：我帶團隊，是在幫人簽更多慾望合約，還是幫人找回主權？</div>
     </div>
   </section>
 
@@ -440,7 +468,15 @@ input[type=range]::-moz-range-thumb{width:21px;height:21px;border-radius:50%;bac
     <div class="sumline"><div class="k">我的 30 天 MVP（M4）</div><div class="v" id="s_mvp">—</div></div>
     <div class="sumline"><div class="k">下週要約談的准增員 + 破冰問句（M5）</div><div class="v" id="s_recruit">—</div></div>
     <div class="sumline"><div class="k">我的自由門檻（M6）</div><div class="v" id="s_enough">—</div></div>
-    <div class="field" style="margin-top:16px"><label>✍️ 我給 30 天後自己的一句承諾</label><input type="text" id="final_one_liner" data-field placeholder="我是＿＿，30 天內我會跑完＿＿"></div>
+    <div class="cols2" style="margin-top:14px">
+      <div class="field" style="margin:6px 0"><label>姓名 / 代號（給講師統計用）</label><input type="text" id="name" data-field placeholder="可用代號，例如 A-林"></div>
+      <div class="field" style="margin:6px 0"><label>單位 / 通訊處</label><input type="text" id="unit" data-field placeholder="例如 ○○ 通訊處"></div>
+    </div>
+    <div class="cols2">
+      <div class="field" style="margin:6px 0"><label>保險年資</label><input type="text" id="years" data-field placeholder="例如 18 年"></div>
+      <div class="field" style="margin:6px 0"><label>年齡層</label><select id="age_band" data-field><option value="">請選擇</option><option>30-39</option><option>40-49</option><option>50-59</option><option>60+</option></select></div>
+    </div>
+    <div class="field" style="margin-top:14px"><label>✍️ 我給 30 天後自己的一句承諾</label><input type="text" id="final_one_liner" data-field placeholder="我是＿＿，30 天內我會跑完＿＿"></div>
     <div class="field"><label>其他想對講師說的話（選填）</label><textarea id="notes" data-field placeholder="任何回饋、想深入的主題、卡關的地方"></textarea></div>
   </section>
 
@@ -467,7 +503,7 @@ input[type=range]::-moz-range-thumb{width:21px;height:21px;border-radius:50%;bac
 
 <script>
 /* ============================================================
-   CONFIG —— 講師修哥只要改這裡（兩個後台都可填，會同時送）
+   CONFIG —— 講師只要改這裡（兩個後台都可填，會同時送）
    ① Google 試算表：部署 backend/apps-script.gs 後貼上「網頁應用程式」網址
    ② Supabase：貼上 專案 URL + anon(publishable) key + 資料表名
    兩個都留空 = 純前端，學員用「下載我的使用說明書」帶走
@@ -614,7 +650,7 @@ function exportManual(){
   <div class="head"><div class="kick">PRODUCTIZE YOURSELF · 個人使用說明書</div>
     <h1>${g("name")||"我"}的個人商品化使用說明書</h1>
     <div class="meta">${g("unit")||""}　·　保險年資 ${g("years")||"—"}　·　${new Date().toLocaleDateString("zh-TW")}</div></div>
-  <div class="eqp">B = [ (U × SK) × A × L ] <sup>T</sup> × Luck</div>
+  <div class="eqp">B = [ (U × SK) × A × L ] <sup>T × Luck</sup></div>
   <h2>我是誰（一句話定位）</h2><div class="pitch">${pitch}</div>
   <h2>① 診斷 · 內在主權</h2><table>
     ${row("四燈號最暗的燈",g("m1_dimmest"))}
